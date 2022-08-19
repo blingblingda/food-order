@@ -85,3 +85,16 @@
    5. 把 action1 号连接到 addHandler 上（在里面调 action1 号），并起一个 type 暗号”ADD“，和需要传递的内容 item
    6. 把 add 这个逻辑写在总的 Reducer 里面，逻辑就是更新所有 state。把 items 和 totalAmount 分开加工好，然后 return 一个新的总 state obj
       **basic cartReducer finished**
+6. 给终端 MealItemForm 的 input 框打标签，保证拿到 input 相关内容
+   1. 用 useRef 创建一个标签容器记录 input 里的 amount
+   2. 给 form 添加 onSubmit 事件触发 submitHandler 处理函数。
+   3. 由于 Input 这里是直接用的自定义组件，所以打标签需要到组件中设置一下
+      1. 使用 React.forwardRef 把 Input UI 内容全部包裹，这样就可以增加一个 ref 参数
+      2. 把 ref 参数传递给里面的 input
+   4. 回到 form 中，可以再 Input 组件里增加一个 ref 属性指向标签容器
+   5. submitHandler 处理函数就可以拿到用户 entered 数据，const 处理一下，交出去。
+      1. 用户输入字符串使用+变数字
+      2. 测试数字如果<1 或>5 直接 return 结束不传输
+      3. 设置一个 state 判断用户输入内容是否 valid。在刚才测试 return 的前面增加一个更新 state 为 false，并在最下面新建一个窗口判断，如果 state 为 false，则展示一条提示信息 p 标签即可。
+   6. 把拿到的 number 传给父组件 MealItem,由父组件举手，引入传声筒，调用 CartProvider 中的 addItem fn 把他们需要的内容传过去
+      **add Item number finished**
