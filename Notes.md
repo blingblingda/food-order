@@ -109,3 +109,11 @@
    5. 如果有 items 过来才显示 Order btn 不然隐藏，逻辑写上
    6. 引入 CartItem 1. 看看 CartItem 都需要哪些 value 展示，直接全部传过去 2. 由于 Item 中有两个按钮分别增加(媒介 item)和减少（媒介 id）的方法，因此父组件需要传两个 fn 过去接收。先在父组件建立两个 Handler 传过去。这里注意要 bind(null, item.id / item) 确认一定有媒介。
       **Outputting Cart Items**
+2. 多个相同的合并成一个：本质上是在 update 增加 item array 的时候使用 findIndex 判断是否存在，如果存在则找到那个 item 增加 totalAmount，不存在的话就正常新增 item+新增 totalAmount
+   1. 在目前的 item 的 state 里面找，看是否有 id 和要加进来的 item 的 id 相同的，如果有，则把这个 id 保存为 existingCartItemIndex
+   2. 从 state.items 中按照保存的 Index 把这个 Item 找出来保存为 existingCartItem
+   3. 设置两个变量：updatedItem 和 updatedItems
+      1. 如果 existingCartItem 为 true，就直接把已经存在的这个 Item 的 amount 更新为他目前的 amount+新增 item 的 amount，存在 updatedItem 中。
+      2. 然后把之前的 array 打开，然后让 array 里面的第 Index 个 item 更新为 updatedItem
+      3. 如果 existingCartItem 为 false，那我的 updatedItem 就是 action 传过来的 item，然后像之前一样直接加进去就可以了
+         **Combine same kind of course amount display**
