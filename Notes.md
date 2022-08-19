@@ -98,3 +98,14 @@
       3. 设置一个 state 判断用户输入内容是否 valid。在刚才测试 return 的前面增加一个更新 state 为 false，并在最下面新建一个窗口判断，如果 state 为 false，则展示一条提示信息 p 标签即可。
    6. 把拿到的 number 传给父组件 MealItem,由父组件举手，引入传声筒，调用 CartProvider 中的 addItem fn 把他们需要的内容传过去
       **add Item number finished**
+
+## 编辑 Cart 界面及功能逻辑
+
+1. 在 Cart 组件中展示最新的 items array
+   1. connect to Context
+   2. 之前的 dummyMeal 可以被真正的拿过来的 items array 替换掉，对这些最新数据进行 map
+   3. map 出的格式是新组建 CardItem
+   4. 把 context 里的 totalAmount 拿出来展示 Cart 的相应位置（需要处理一下$和小数点）
+   5. 如果有 items 过来才显示 Order btn 不然隐藏，逻辑写上
+   6. 引入 CartItem 1. 看看 CartItem 都需要哪些 value 展示，直接全部传过去 2. 由于 Item 中有两个按钮分别增加(媒介 item)和减少（媒介 id）的方法，因此父组件需要传两个 fn 过去接收。先在父组件建立两个 Handler 传过去。这里注意要 bind(null, item.id / item) 确认一定有媒介。
+      **Outputting Cart Items**
