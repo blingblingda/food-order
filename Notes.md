@@ -121,3 +121,15 @@
    1. 由于 CartItem 已经把这个状态上传给了父组件 Cart，所以按钮通过 onAdd 后会触发 Cart 组件中的 cartItemAddHandler 函数。该函数会调取 cartCtx 里面 addItem 的方法，并把 item 传过去。通过 addItem 作为媒介，会触发 CartProvider 里面的 addItemToCartHandler 函数，然后执行"ADD"对应逻辑。
    2. 按钮 onRemove 后同样一套流程到 Provider 的 action type 为“REMOVE"逻辑这里，需要增加逻辑:如果 state 里面这个 item 的 amount>1，那么就 amount-1，如果 amount=1，那么把 item 整个 remove 掉 1. 从目前的 state 中寻找 id 和 action 过来的 id 相等的 item 的 Index 2. 把这个 id 对应的 Item 拿出来 3. 定义一下 updatedItems 更新过的 array 4. 如果目前存在这个 existingItem 的 amount 为 1，那么新的 array 需要用 filter 把 item.id 不等于 action.id 的所有 item 挑出来单独组成新 array（其实也就是删除了那个 id 对应的 item） 5. 否则（剩余数量>1)就把那个 item 做一个加工，展开，amount 数量-1，定义为 updatedItem，然后把 array updatedItems 展开，把第 Index 个 Item 更新为 updatedItem 6. totalAmount 的状态-最新的 existingItem.price 就是最新的 totalAmount 7. 最后把最新的 items 和 totalAmount 赋值并 return 出去 8. 回到 Cart 中，把 id 传给 removeItem
       **using + - in CarItem to control number of each item, and remove item**
+
+## 右上角购物车只要变化，按钮就会有一个 bump 动画效果
+
+1. 把 btn 的 classes 加工一下，增加一个 bump 里面的效果，生成一个新的 class
+2. 把展示的 button 换成这个新 class，这样就有 bump 效果了。
+3. 但是不是每次都需要效果的，设置一个 btn 是否被 highlight 的 state，如果是 true 则增加 bump class，否则不增加+""
+4. highlight 状态是根据 items 的变化来变化的，因此需要使用 useEffect 来控制什么时候更新 highlight 的 state
+   1. 如果传声筒里没有 items 则不触发 useEffect（直接 return）
+   2. 因为 effect 是根据 items 的变化而不是整个 cartCtx 的变化来变化，因此应该先把 items 从 cartCtx 里 destructure 出来。
+5. 问题：只有第一次添加进去的时候会触发 class
+   1. 每次结束时都要 remove class： 可以设置一个定时器，等 300ms 后（也就是一个 animation 的时长），立刻更新 highlight 的 state 为 false，这样 class 就被移除了。
+   2. 自己设置的 timer 自己要移除，不然每次 render 都会叠加新的 timer 上去.在 useEffect 最后 return 一个 cleanup fn
