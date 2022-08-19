@@ -117,3 +117,7 @@
       2. 然后把之前的 array 打开，然后让 array 里面的第 Index 个 item 更新为 updatedItem
       3. 如果 existingCartItem 为 false，那我的 updatedItem 就是 action 传过来的 item，然后像之前一样直接加进去就可以了
          **Combine same kind of course amount display**
+3. 在 CartItem 中，利用+ -符号修改显示内容，以及删除 item
+   1. 由于 CartItem 已经把这个状态上传给了父组件 Cart，所以按钮通过 onAdd 后会触发 Cart 组件中的 cartItemAddHandler 函数。该函数会调取 cartCtx 里面 addItem 的方法，并把 item 传过去。通过 addItem 作为媒介，会触发 CartProvider 里面的 addItemToCartHandler 函数，然后执行"ADD"对应逻辑。
+   2. 按钮 onRemove 后同样一套流程到 Provider 的 action type 为“REMOVE"逻辑这里，需要增加逻辑:如果 state 里面这个 item 的 amount>1，那么就 amount-1，如果 amount=1，那么把 item 整个 remove 掉 1. 从目前的 state 中寻找 id 和 action 过来的 id 相等的 item 的 Index 2. 把这个 id 对应的 Item 拿出来 3. 定义一下 updatedItems 更新过的 array 4. 如果目前存在这个 existingItem 的 amount 为 1，那么新的 array 需要用 filter 把 item.id 不等于 action.id 的所有 item 挑出来单独组成新 array（其实也就是删除了那个 id 对应的 item） 5. 否则（剩余数量>1)就把那个 item 做一个加工，展开，amount 数量-1，定义为 updatedItem，然后把 array updatedItems 展开，把第 Index 个 Item 更新为 updatedItem 6. totalAmount 的状态-最新的 existingItem.price 就是最新的 totalAmount 7. 最后把最新的 items 和 totalAmount 赋值并 return 出去 8. 回到 Cart 中，把 id 传给 removeItem
+      **using + - in CarItem to control number of each item, and remove item**
