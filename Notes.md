@@ -76,3 +76,12 @@
    1. 收取后代号 cartCtx
    2. 需求：badge 里应该显示所有选中 item 里面 amount 的总和。如果使用 length 则是 item 的数量，是不对的。使用原生 reduce 就可以根据遍历元素的某个属性内容做统计。
    3. 把传声筒（代号）里面传过来的所有 item 进行 reduce 遍历，return 的是每一个 item 里面 amount 属性的总和。这样形成的 number 是我们需要展示的 number。
+      **cart component showing & cart-context setup**
+5. 管理 Items 状态。CarProvider 里面的 addItemToCartHandler 一旦被调用，就会增加一个新的 item 到 items array 中（已存在-update state，新的-add state）。所以需要使用 useReducer 来管理所有 state
+   1. 在 component 外面 const 一个 cartReducer，在外面因为 this reducer function won't need anything from the component, and shouldn't be recreated when the component is reevaluated.
+   2. cartReducer 是总的 Reducer 里面管理所有的 state，return 一个总 defaultCartState
+   3. 在 cartReducer 这个组件中，我们可以 call useReducer，把里面 state1 号 cartState 和 action1 号 dispatchCartAction 拿出来
+   4. 把传出去的内容里的 items 和 amount 都改成目前的 state
+   5. 把 action1 号连接到 addHandler 上（在里面调 action1 号），并起一个 type 暗号”ADD“，和需要传递的内容 item
+   6. 把 add 这个逻辑写在总的 Reducer 里面，逻辑就是更新所有 state。把 items 和 totalAmount 分开加工好，然后 return 一个新的总 state obj
+      **basic cartReducer finished**
