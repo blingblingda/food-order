@@ -139,6 +139,16 @@
 1. moving "meals" data to the backend (215)
 2. Fetching Meals via Http (follow previous lecture)
    **fetched meals data**
+3. 点击 Order btn 后隐藏在 TotalAmount 下面 show form to write info，cancel btn 关闭整个 cart。
+   1. 新界面所以要新建 Checkout.js
+   2. 创建好 form，插进 Cart.js 的 TotalAmount 下面
+   3. 加条件，只有点击 Order 才能 show 这个组件：给 Order btn 增加 click 事件触发 orderHandler fn。使用 useState 判断何时 show。
+   4. checkout 中的 cancel 按钮可以关掉整个 Cart，仍然可以使用传声筒里的 onHideCart 事件，不过需要先从 Cart 传给 Checkout 才能用
+4. 表单提交后检查 input 的 validity (依照 form 写法做)
+   1. form 添加 submit 事件 confirmHandler
+   2. 拿到用户输入内容（useState or useRef)
+   3. 判断 validity
+      **created and checked the validity of the checkout form**
 
 ## Submitting Orders to a Backend Server (Http)
 
