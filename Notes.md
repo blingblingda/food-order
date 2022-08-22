@@ -133,3 +133,13 @@
 5. 问题：只有第一次添加进去的时候会触发 class
    1. 每次结束时都要 remove class： 可以设置一个定时器，等 300ms 后（也就是一个 animation 的时长），立刻更新 highlight 的 state 为 false，这样 class 就被移除了。
    2. 自己设置的 timer 自己要移除，不然每次 render 都会叠加新的 timer 上去.在 useEffect 最后 return 一个 cleanup fn
+
+## Adding a Checkout/Order Form
+
+1. moving "meals" data to the backend (215)
+2. Fetching Meals via Http (follow previous lecture)
+   **fetched meals data**
+
+## Submitting Orders to a Backend Server (Http)
+
+## Fetching Meals Data
