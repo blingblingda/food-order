@@ -150,6 +150,18 @@
    3. 判断 validity
       **created and checked the validity of the checkout form**
 
-## Submitting Orders to a Backend Server (Http)
+## Submitting Orders to a Backend Server (cart data: items in the cart & submitted user data)
 
-## Fetching Meals Data
+1. Cart.js 去 send data，所以 Checkout.js 要把收集到的 user data 以 obj 格式传给父组件（父组件建立 fn 接收参数）
+2. 在 submitOrderHandler 要 send 两组 data
+   1. 注意 body: JSON.stringify 里是 obj，因为有两组
+   2. 用 fetch post 即可不需要再把新的取回来了。
+3. 用户提交后：清空 Cart 界面
+   1. isSubmitting 一个 state，onSubmit fn 触发后先更新为 true，fetch 完毕后再更新回 false
+   2. didSubmit 一个 state，isSubmitting 结束后，更新 did 为 true
+   3. 依据这两个状态，决定下面 return 的 JSX 展示什么
+      1. isSubmitting false 提交前显示详细信息
+      2. isSubmitting true 正在提交显示一句话
+      3. didSubmit true 提交完毕显示一句话
+   4. 清空购物车 1. 去 CartProvider 里面增加一个 action："CLEAR" 2. cart-context 里也应该对应多一个 fn 3. 回到 cart.js，拿来用
+      **finished data**

@@ -45,6 +45,12 @@ const Checkout = (props) => {
     if (!formIsValid) {
       return;
     }
+    props.onConfirm({
+      name: enteredName,
+      street: enteredStreet,
+      postcode: enteredPostcode,
+      city: enteredCity,
+    });
     resetName();
     resetStreet();
     resetPostcode();
